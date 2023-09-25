@@ -186,9 +186,8 @@ function Start() {
   [[ "$isCN" == '1' ]] && echo "Location: Domestic"
 
   if [ -f "/tmp/InstallNET.sh" ]; then
-    rm -f /tmp/InstallNET.sh
+   rm -f /tmp/InstallNET.sh
   fi
-  #curl -sSL -o /tmp/InstallNET.sh 'https://fastly.jsdelivr.net/gh/hiCasper/Shell@latest/InstallNET.sh' && chmod a+x /tmp/InstallNET.sh
   aria2c https://raw.githubusercontent.com/0ldm0s/myShell/master/InstallNET.sh -o InstallNET.sh && mv InstallNET.sh /tmp && chmod a+x /tmp/InstallNET.sh
 
   CMIRROR=''
