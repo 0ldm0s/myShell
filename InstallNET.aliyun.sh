@@ -14,7 +14,7 @@ export tmpMirror=''
 export ipAddr=''
 export ipMask=''
 export ipGate=''
-export ipDNS='8.8.8.8'
+export ipDNS='100.100.2.136'
 export IncDisk='default'
 export interface=''
 export interfaceSelect=''
@@ -625,8 +625,8 @@ d-i netcfg/confirm_static boolean true
 d-i hw-detect/load_firmware boolean true
 
 d-i mirror/country string manual
-d-i mirror/http/hostname string $MirrorHost
-d-i mirror/http/directory string $MirrorFolder
+d-i mirror/http/hostname string mirrors.aliyun.com
+d-i mirror/http/directory string debian
 d-i mirror/http/proxy string
 
 d-i passwd/root-login boolean ture

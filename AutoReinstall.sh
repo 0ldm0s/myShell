@@ -188,7 +188,15 @@ function Start() {
   if [ -f "/tmp/InstallNET.sh" ]; then
    rm -f /tmp/InstallNET.sh
   fi
+  if [ -f "/tmp/InstallNET.aliyun.sh" ]; then
+   rm -f /tmp/InstallNET.aliyun.sh
+  fi
+  if [ -f "/tmp/InstallNET.tencent.sh" ]; then
+   rm -f /tmp/InstallNET.tencent.sh
+  fi
   aria2c https://raw.githubusercontent.com/0ldm0s/myShell/master/InstallNET.sh -o InstallNET.sh && mv InstallNET.sh /tmp && chmod a+x /tmp/InstallNET.sh
+  aria2c https://raw.githubusercontent.com/0ldm0s/myShell/master/InstallNET.aliyun.sh -o InstallNET.aliyun.sh && mv InstallNET.aliyun.sh /tmp && chmod a+x /tmp/InstallNET.aliyun.sh
+  aria2c https://raw.githubusercontent.com/0ldm0s/myShell/master/InstallNET.tencent.sh -o InstallNET.tencent.sh && mv InstallNET.tencent.sh /tmp && chmod a+x /tmp/InstallNET.tencent.sh
 
   CMIRROR=''
   CVMIRROR=''
@@ -206,6 +214,8 @@ function Start() {
   echo -e "\nPlease select an OS:"
   echo "  1) Debian 11"
   echo "  2) Debian 12"
+  echo "  21) Debian 12 aliyun"
+  echo "  22) Debian 12 tencent"
   echo "  3) Ubuntu 20.04"
   echo "  4) Ubuntu 22.04"
   echo "  9) Custom image"
@@ -215,6 +225,8 @@ function Start() {
   case $N in
     1) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -d 11 -v 64 -a $NETSTR $DMIRROR ;;
     2) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -d 12 -v 64 -a $NETSTR $DMIRROR ;;
+    21) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.aliyun.sh -d 12 -v 64 -a $NETSTR --mirror http://mirrors.aliyun.com/debian ;;
+    22) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.tencent.sh -d 12 -v 64 -a $NETSTR --mirror http://mirrors.cloud.tencent.com/debian ;;
     3) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 20.04 -v 64 -a $NETSTR $UMIRROR ;;
     4) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 22.04 -v 64 -a $NETSTR $UMIRROR ;;
     9)
