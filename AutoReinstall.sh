@@ -186,18 +186,24 @@ function Start() {
   [[ "$isCN" == '1' ]] && echo "Location: Domestic"
 
   if [ -f "/tmp/InstallNET.sh" ]; then
-   rm -f /tmp/InstallNET.sh
+   #rm -f /tmp/InstallNET.sh
+   chmod a+x /tmp/InstallNET.sh
+  else
+   aria2c https://raw.githubusercontent.com/0ldm0s/myShell/master/InstallNET.sh -o InstallNET.sh && mv InstallNET.sh /tmp && chmod a+x /tmp/InstallNET.sh
   fi
   if [ -f "/tmp/InstallNET.aliyun.sh" ]; then
-   rm -f /tmp/InstallNET.aliyun.sh
+   #rm -f /tmp/InstallNET.aliyun.sh
+   chmod a+x /tmp/InstallNET.aliyun.sh
+  else
+   aria2c https://raw.githubusercontent.com/0ldm0s/myShell/master/InstallNET.aliyun.sh -o InstallNET.aliyun.sh && mv InstallNET.aliyun.sh /tmp && chmod a+x /tmp/InstallNET.aliyun.sh
   fi
   if [ -f "/tmp/InstallNET.tencent.sh" ]; then
-   rm -f /tmp/InstallNET.tencent.sh
+   #rm -f /tmp/InstallNET.tencent.sh
+   chmod a+x /tmp/InstallNET.tencent.sh
+  else
+   aria2c https://raw.githubusercontent.com/0ldm0s/myShell/master/InstallNET.tencent.sh -o InstallNET.tencent.sh && mv InstallNET.tencent.sh /tmp && chmod a+x /tmp/InstallNET.tencent.sh
   fi
-  aria2c https://raw.githubusercontent.com/0ldm0s/myShell/master/InstallNET.sh -o InstallNET.sh && mv InstallNET.sh /tmp && chmod a+x /tmp/InstallNET.sh
-  aria2c https://raw.githubusercontent.com/0ldm0s/myShell/master/InstallNET.aliyun.sh -o InstallNET.aliyun.sh && mv InstallNET.aliyun.sh /tmp && chmod a+x /tmp/InstallNET.aliyun.sh
-  aria2c https://raw.githubusercontent.com/0ldm0s/myShell/master/InstallNET.tencent.sh -o InstallNET.tencent.sh && mv InstallNET.tencent.sh /tmp && chmod a+x /tmp/InstallNET.tencent.sh
-
+  
   CMIRROR=''
   CVMIRROR=''
   DMIRROR=''

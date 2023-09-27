@@ -618,7 +618,7 @@ d-i netcfg/dhcp_options select Configure network manually
 d-i netcfg/get_ipaddress string $IPv4
 d-i netcfg/get_netmask string $MASK
 d-i netcfg/get_gateway string $GATE
-d-i netcfg/get_nameservers string $ipDNS
+d-i netcfg/get_nameservers string 183.60.83.19 183.60.82.98
 d-i netcfg/no_default_route boolean true
 d-i netcfg/confirm_static boolean true
 
@@ -626,7 +626,7 @@ d-i hw-detect/load_firmware boolean true
 
 d-i mirror/country string manual
 d-i mirror/http/hostname string mirrors.cloud.tencent.com
-d-i mirror/http/directory string debian
+d-i mirror/http/directory string /debian/
 d-i mirror/http/proxy string
 
 d-i passwd/root-login boolean ture
