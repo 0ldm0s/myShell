@@ -231,7 +231,7 @@ function Start() {
   case $N in
     1) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -d 11 -v 64 -a $NETSTR $DMIRROR ;;
     2) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -d 12 -v 64 -a $NETSTR $DMIRROR ;;
-    21) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.aliyun.sh -d 12 -v 64 -a $NETSTR --mirror http://mirrors.aliyun.com/debian ;;
+    21) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.aliyun.sh -d 12 -v 64 -a $NETSTR --mirror http://mirrors.cloud.aliyuncs.com/debian ;;
     22) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.tencent.sh -d 12 -v 64 -a $NETSTR --mirror http://mirrors.cloud.tencent.com/debian ;;
     3) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 20.04 -v 64 -a $NETSTR $UMIRROR ;;
     4) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 22.04 -v 64 -a $NETSTR $UMIRROR ;;
