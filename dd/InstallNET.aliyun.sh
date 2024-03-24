@@ -366,7 +366,7 @@ if [[ -n "$tmpDIST" ]]; then
     [[ $? -eq '0' ]] && {
       isDigital="$(echo "$DIST" |grep -o '[\.0-9]\{1,\}' |sed -n '1h;1!H;$g;s/\n//g;$p')";
       [[ -n $isDigital ]] && {
-        [[ "$isDigital" == '20.04' ]] && DIST='focal';
+        [[ "$isDigital" == '24.04' ]] && DIST='noble';
         [[ "$isDigital" == '22.04' ]] && DIST='jammy';
       }
     }
