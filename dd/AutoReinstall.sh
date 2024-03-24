@@ -189,25 +189,25 @@ function Start() {
    #rm -f /tmp/InstallNET.sh
    chmod a+x /tmp/InstallNET.sh
   else
-   aria2c https://raw.githubusercontent.com/0ldm0s/myShell/dd/master/InstallNET.sh -o InstallNET.sh && mv InstallNET.sh /tmp && chmod a+x /tmp/InstallNET.sh
+   aria2c https://raw.githubusercontent.com/0ldm0s/myShell/master/dd/InstallNET.sh -o InstallNET.sh && mv InstallNET.sh /tmp && chmod a+x /tmp/InstallNET.sh
   fi
   if [ -f "/tmp/InstallNET.aliyun.sh" ]; then
    #rm -f /tmp/InstallNET.aliyun.sh
    chmod a+x /tmp/InstallNET.aliyun.sh
   else
-   aria2c https://raw.githubusercontent.com/0ldm0s/myShell/dd/master/InstallNET.aliyun.sh -o InstallNET.aliyun.sh && mv InstallNET.aliyun.sh /tmp && chmod a+x /tmp/InstallNET.aliyun.sh
+   aria2c https://raw.githubusercontent.com/0ldm0s/myShell/master/dd/InstallNET.aliyun.sh -o InstallNET.aliyun.sh && mv InstallNET.aliyun.sh /tmp && chmod a+x /tmp/InstallNET.aliyun.sh
   fi
   if [ -f "/tmp/InstallNET.tencent.sh" ]; then
    #rm -f /tmp/InstallNET.tencent.sh
    chmod a+x /tmp/InstallNET.tencent.sh
   else
-   aria2c https://raw.githubusercontent.com/0ldm0s/myShell/dd/master/InstallNET.tencent.sh -o InstallNET.tencent.sh && mv InstallNET.tencent.sh /tmp && chmod a+x /tmp/InstallNET.tencent.sh
+   aria2c https://raw.githubusercontent.com/0ldm0s/myShell/master/dd/InstallNET.tencent.sh -o InstallNET.tencent.sh && mv InstallNET.tencent.sh /tmp && chmod a+x /tmp/InstallNET.tencent.sh
   fi
   if [ -f "/tmp/InstallNET.kali.sh" ]; then
    #rm -f /tmp/InstallNET.kali.sh
    chmod a+x /tmp/InstallNET.kali.sh
   else
-   aria2c https://raw.githubusercontent.com/0ldm0s/myShell/dd/master/InstallNET.kali.sh -o InstallNET.kali.sh && mv InstallNET.kali.sh /tmp && chmod a+x /tmp/InstallNET.kali.sh
+   aria2c https://raw.githubusercontent.com/0ldm0s/myShell/master/dd/InstallNET.kali.sh -o InstallNET.kali.sh && mv InstallNET.kali.sh /tmp && chmod a+x /tmp/InstallNET.kali.sh
   fi
   
   CMIRROR=''
