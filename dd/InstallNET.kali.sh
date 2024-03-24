@@ -52,6 +52,13 @@ while [[ $# -ge 1 ]]; do
       tmpDIST="$1"
       shift
       ;;
+    -k|--kali)
+      shift
+      Relese='Kali'
+      tmpDIST="$1"
+      SpikCheckDIST='1'
+      shift
+      ;;
     -u|--ubuntu)
       shift
       Relese='Ubuntu'
@@ -195,19 +202,23 @@ function selectMirror(){
   if [ "$Relese" == "debian" ] || [ "$Relese" == "ubuntu" ]; then
     [ "$DIST" == "focal" ] && legacy="legacy-" || legacy=""
     TEMP="SUB_MIRROR/dists/${DIST}/main/installer-${VER}/current/${legacy}images/netboot/${Relese}-installer/${VER}/initrd.gz"
+  elif [ "$Relese" == "kali" ]; then
+    TEMP="SUB_MIRROR/dists/${DIST}/main/installer-${VER}/current/images/netboot/debian-installer/${VER}/initrd.gz"
   elif [ "$Relese" == "centos" ]; then
     TEMP="SUB_MIRROR/${DIST}/os/${VER}/isolinux/initrd.img"
   fi
   [ -n "$TEMP" ] || exit 1
   mirrorStatus=0
   declare -A MirrorBackup
-  MirrorBackup=(["debian0"]="" ["debian1"]="http://deb.debian.org/debian" ["debian2"]="http://archive.debian.org/debian" ["ubuntu0"]="" ["ubuntu1"]="http://archive.ubuntu.com/ubuntu" ["ubuntu2"]="http://ports.ubuntu.com" ["centos0"]="" ["centos1"]="http://mirror.centos.org/centos" ["centos2"]="http://vault.centos.org")
+  MirrorBackup=(["debian0"]="" ["debian1"]="http://deb.debian.org/debian" ["debian2"]="http://archive.debian.org/debian" ["ubuntu0"]="" ["ubuntu1"]="http://archive.ubuntu.com/ubuntu" ["ubuntu2"]="http://ports.ubuntu.com" ["kali0"]="" ["centos0"]="" ["centos1"]="http://mirror.centos.org/centos" ["centos2"]="http://vault.centos.org")
   echo "$New" |grep -q '^http://\|^https://\|^ftp://' && MirrorBackup[${Relese}0]="$New"
   for mirror in $(echo "${!MirrorBackup[@]}" |sed 's/\ /\n/g' |sort -n |grep "^$Relese")
     do
       Current="${MirrorBackup[$mirror]}"
       [ -n "$Current" ] || continue
       MirrorURL=`echo "$TEMP" |sed "s#SUB_MIRROR#${Current}#g"`
+      echo ${MirrorURL};
+      exit 1;
       wget --no-check-certificate --spider --timeout=3 -o /dev/null "$MirrorURL"
       [ $? -eq 0 ] && mirrorStatus=1 && break
     done
@@ -315,7 +326,7 @@ IPv4="$ipAddr"; MASK="$ipMask"; GATE="$ipGate";
   exit 1;
 }
 
-if [[ "$Relese" == 'Debian' ]] || [[ "$Relese" == 'Ubuntu' ]]; then
+if [[ "$Relese" == 'Debian' ]] || [[ "$Relese" == 'Ubuntu' ]] || [[ "$Relese" == 'Kali' ]]; then
   dependence wget,awk,grep,sed,cut,cat,lsblk,cpio,gzip,find,dirname,basename;
 elif [[ "$Relese" == 'CentOS' ]]; then
   dependence wget,awk,grep,sed,cut,cat,lsblk,cpio,gzip,find,dirname,basename,file,xz;
@@ -340,6 +351,7 @@ fi
 
 if [[ -z "$tmpDIST" ]]; then
   [ "$Relese" == 'Debian' ] && tmpDIST='buster';
+  [ "$Relese" == 'Kali' ] && tmpDIST='kali-rolling';
   [ "$Relese" == 'Ubuntu' ] && tmpDIST='bionic';
   [ "$Relese" == 'CentOS' ] && tmpDIST='6.10';
 fi
@@ -358,6 +370,13 @@ if [[ -n "$tmpDIST" ]]; then
       }
     }
     LinuxMirror=$(selectMirror "$Relese" "$DIST" "$VER" "$tmpMirror")
+  fi
+  if [[ "$Relese" == 'Kali' ]]; then
+    SpikCheckDIST='1'
+    DIST="$(echo "$tmpDIST" |sed -r 's/(.*)/\L\1/')";
+    echo "$DIST" |grep -q '[0-9]';
+    LinuxMirror=$(selectMirror "$Relese" "$DIST" "$VER" "$tmpMirror")
+    linux_relese='debian';
   fi
   if [[ "$Relese" == 'Ubuntu' ]]; then
     SpikCheckDIST='0'
@@ -394,6 +413,7 @@ fi
 if [[ -z "$LinuxMirror" ]]; then
   echo -ne "\033[31mError! \033[0mInvaild mirror! \n"
   [ "$Relese" == 'Debian' ] && echo -en "\033[33mexample:\033[0m http://deb.debian.org/debian\n\n";
+  [ "$Relese" == 'Kali' ] && echo -en "\033[33mexample:\033[0m http://http.kali.org/dists\n\n";
   [ "$Relese" == 'Ubuntu' ] && echo -en "\033[33mexample:\033[0m http://archive.ubuntu.com/ubuntu\n\n";
   [ "$Relese" == 'CentOS' ] && echo -en "\033[33mexample:\033[0m http://mirror.centos.org/centos\n\n";
   bash $0 error;
@@ -605,10 +625,15 @@ $UNCOMP < /tmp/$NewIMG | cpio --extract --verbose --make-directories --no-absolu
 
 if [[ "$linux_relese" == 'debian' ]] || [[ "$linux_relese" == 'ubuntu' ]]; then
 cat >/tmp/boot/preseed.cfg<<EOF
-d-i debian-installer/locale string en_US
+d-i debian-installer/locale string en_US.UTF-8
+d-i debian-installer/country string US
+d-i debian-installer/language string en
+
 d-i console-setup/layoutcode string us
 
 d-i keyboard-configuration/xkb-keymap string us
+d-i lowmem/low note
+d-i anna/choose_modules_lowmem multiselect $SelectLowmem
 
 d-i netcfg/choose_interface select $interfaceSelect
 
@@ -636,10 +661,8 @@ d-i user-setup/allow-password-weak boolean true
 d-i user-setup/encrypt-home boolean false
 
 d-i clock-setup/utc boolean true
-d-i time/zone string UTC
-d-i clock-setup/ntp boolean true
-d-i clock-setup/ntp-server string time.asia.apple.com
-d-i partman/default_filesystem string xfs
+d-i time/zone string US/Eastern
+d-i clock-setup/ntp boolean false
 
 d-i preseed/early_command string anna-install libfuse2-udeb fuse-udeb ntfs-3g-udeb libcrypto1.1-udeb libpcre2-8-0-udeb libssl1.1-udeb libuuid1-udeb zlib1g-udeb wget-udeb
 d-i partman/early_command string [[ -n "\$(blkid -t TYPE='vfat' -o device)" ]] && umount "\$(blkid -t TYPE='vfat' -o device)"; \
@@ -671,6 +694,7 @@ tasksel tasksel/first multiselect minimal
 d-i pkgsel/update-policy select none
 d-i pkgsel/include string openssh-server
 d-i pkgsel/upgrade select none
+d-i apt-setup/services-select multiselect
 
 popularity-contest popularity-contest/participate boolean false
 

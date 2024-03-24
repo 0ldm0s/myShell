@@ -189,30 +189,38 @@ function Start() {
    #rm -f /tmp/InstallNET.sh
    chmod a+x /tmp/InstallNET.sh
   else
-   aria2c https://raw.githubusercontent.com/0ldm0s/myShell/master/InstallNET.sh -o InstallNET.sh && mv InstallNET.sh /tmp && chmod a+x /tmp/InstallNET.sh
+   aria2c https://raw.githubusercontent.com/0ldm0s/myShell/dd/master/InstallNET.sh -o InstallNET.sh && mv InstallNET.sh /tmp && chmod a+x /tmp/InstallNET.sh
   fi
   if [ -f "/tmp/InstallNET.aliyun.sh" ]; then
    #rm -f /tmp/InstallNET.aliyun.sh
    chmod a+x /tmp/InstallNET.aliyun.sh
   else
-   aria2c https://raw.githubusercontent.com/0ldm0s/myShell/master/InstallNET.aliyun.sh -o InstallNET.aliyun.sh && mv InstallNET.aliyun.sh /tmp && chmod a+x /tmp/InstallNET.aliyun.sh
+   aria2c https://raw.githubusercontent.com/0ldm0s/myShell/dd/master/InstallNET.aliyun.sh -o InstallNET.aliyun.sh && mv InstallNET.aliyun.sh /tmp && chmod a+x /tmp/InstallNET.aliyun.sh
   fi
   if [ -f "/tmp/InstallNET.tencent.sh" ]; then
    #rm -f /tmp/InstallNET.tencent.sh
    chmod a+x /tmp/InstallNET.tencent.sh
   else
-   aria2c https://raw.githubusercontent.com/0ldm0s/myShell/master/InstallNET.tencent.sh -o InstallNET.tencent.sh && mv InstallNET.tencent.sh /tmp && chmod a+x /tmp/InstallNET.tencent.sh
+   aria2c https://raw.githubusercontent.com/0ldm0s/myShell/dd/master/InstallNET.tencent.sh -o InstallNET.tencent.sh && mv InstallNET.tencent.sh /tmp && chmod a+x /tmp/InstallNET.tencent.sh
+  fi
+  if [ -f "/tmp/InstallNET.kali.sh" ]; then
+   #rm -f /tmp/InstallNET.kali.sh
+   chmod a+x /tmp/InstallNET.kali.sh
+  else
+   aria2c https://raw.githubusercontent.com/0ldm0s/myShell/dd/master/InstallNET.kali.sh -o InstallNET.kali.sh && mv InstallNET.kali.sh /tmp && chmod a+x /tmp/InstallNET.kali.sh
   fi
   
   CMIRROR=''
   CVMIRROR=''
   DMIRROR=''
   UMIRROR=''
+  KMIRROR='https://http.kali.org/dists'
   if [[ "$isCN" == '1' ]];then
     CMIRROR="--mirror http://mirrors.cloud.tencent.com/centos"
     CVMIRROR="--mirror http://mirrors.cloud.tencent.com/centos-vault"
     DMIRROR="--mirror http://mirrors.cloud.tencent.com/debian"
     UMIRROR="--mirror http://mirrors.cloud.tencent.com/ubuntu"
+    KMIRROR="--mirror http://kali.download/kali"
   fi
 
   sed -i 's/$1$4BJZaD0A$y1QykUnJ6mXprENfwpseH0/$1$7R4IuxQb$J8gcq7u9K0fNSsDNFEfr90/' /tmp/InstallNET.sh
@@ -222,8 +230,9 @@ function Start() {
   echo "  2) Debian 12"
   echo "  21) Debian 12 aliyun"
   echo "  22) Debian 12 tencent"
-  echo "  3) Ubuntu 20.04"
-  echo "  4) Ubuntu 22.04"
+  echo "  3) Ubuntu 22.04"
+  echo "  4) Ubuntu 24.04"
+  echo "  8) Kali Rolling"
   echo "  9) Custom image"
   echo "  0) Exit"
   echo -ne "\nYour option: "
@@ -233,8 +242,9 @@ function Start() {
     2) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -d 12 -v 64 -a $NETSTR $DMIRROR ;;
     21) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.aliyun.sh -d 12 -v 64 -a $NETSTR --mirror http://mirrors.cloud.aliyuncs.com/debian ;;
     22) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.tencent.sh -d 12 -v 64 -a $NETSTR --mirror http://mirrors.cloud.tencent.com/debian ;;
-    3) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 20.04 -v 64 -a $NETSTR $UMIRROR ;;
-    4) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 22.04 -v 64 -a $NETSTR $UMIRROR ;;
+    3) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 22.04 -v 64 -a $NETSTR $UMIRROR ;;
+    4) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.sh -u 24.04 -v 64 -a $NETSTR $UMIRROR ;;
+    8) echo -e "\nPassword: Pwd@Linux\n"; read -s -n1 -p "Press any key to continue..." ; bash /tmp/InstallNET.kali.sh -k kali-rolling -v 64 -a $NETSTR $KMIRROR ;;
     9)
       echo -e "\n"
       read -r -p "Custom image URL: " imgURL
